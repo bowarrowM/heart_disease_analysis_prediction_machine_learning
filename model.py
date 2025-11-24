@@ -74,3 +74,10 @@ plt.show()
 importants = pd.Series(rf_model.feature_importances_, index=X_train.columns).sort_values(ascending=False)
 print("\nTop 10 Important Features:\n", importants.head(10))
 
+
+
+#joblib to save model
+joblib.dump(rf_model,'heart_disease_model.pkl' )
+#column names
+joblib.dump(X_train.columns,'model_columns.pkl' )
+print("Model and columns saved.")
