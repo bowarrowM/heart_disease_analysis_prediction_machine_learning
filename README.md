@@ -106,6 +106,7 @@ After completing the setup, open your terminal and launch the app to access the 
 
 """ 
 bash
+
 streamlit run app.py
 """
 
