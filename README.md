@@ -1,4 +1,4 @@
-# Heart Disease Analysis & Prediction Project
+# Heart Disease Analysis & Prediction Project with Random Forest
 
 -Note: This PROJECT and README are all to be updated. Feedback and suggestions are welcomed and appreciated! Thank you.
 
@@ -34,23 +34,23 @@ Model Training & Evaluation: predictive modeling with performance metrics and co
 ### model_results = 
 - Train shape: (736, 20)
 - Test shape: (184, 20)
-- Accuracy: 0.57
-- F1 Score: 0.55
-### Classification Report: For all  levels of heart disease stated in the dataset (0 : no disease, 1-4: disease)
-  0: precision 0.75, recall 0.83, f1 0.79
-  1: precision 0.53, recall 0.51, f1 0.52
-  2: precision 0.22, recall 0.18, f1 0.20
-  3: precision 0.26, recall 0.29, f1 0.27
-  4: precision 0.00, recall 0.00, f1 0.00
+- Accuracy: 0.86 binary class
+- F1 Score: 0.858 binary
+
+### Classification Report: For all  levels of heart disease stated in the dataset (0 : no disease, 1: disease)
+  0: precision 0.86, recall 0.82, f1 0.84
+  1: precision 0.86, recall 0.89, f1 0.88
+
   
 ### Top 10 Features by Importance:
-  age, thalch, oldpeak, chol, trestbps, dataset_Hungary, exang_True, restecg_normal, thal_normal, cp_atypical angina
-  
+  age, thalch, oldpeak, chol, trestbpsy, exang_True, restecg_normal, thal_normal, cp_atypical angina
 
 ## Project Structure
 ├── .env                  # Environment variables / database credentials (gitignored)
 
 ├── all_imports.py        # Library imports and dataset loading
+
+├── app.py                # Streamlit frontend interface for users
 
 ├── data_analysis.py      # EDA: info, shape, nulls, summary stats
 
@@ -60,7 +60,12 @@ Model Training & Evaluation: predictive modeling with performance metrics and co
 
 ├── model.py              # Preprocessing, training, evaluation, confusion matrix
 
+├── heart_disease_model.pkl
+
+├── model_columns.pkl
+
 └── requirements.txt      # Required Python packages
+
 
 ## Setup Instructions
 
