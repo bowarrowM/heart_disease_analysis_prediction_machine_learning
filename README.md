@@ -38,8 +38,8 @@ Model Training & Evaluation: predictive modeling with performance metrics and co
 - F1 Score: 0.858 binary
 
 ### Classification Report: For all  levels of heart disease stated in the dataset (0 : no disease, 1: disease)
-  0: precision 0.86, recall 0.82, f1 0.84
-  1: precision 0.86, recall 0.89, f1 0.88
+   -0: precision 0.86, recall 0.82, f1 0.84
+   -1: precision 0.86, recall 0.89, f1 0.88
 
   
 ### Top 10 Features by Importance:
