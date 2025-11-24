@@ -14,7 +14,7 @@ def data_preprocess(df):
     numerical_cols = df.drop(columns=['num'] + categorical_cols, errors="ignore").columns
     # 'num' is target, so not included in features. target : 0(no disease) / 1,2,3,4 (disease, with severity levels)
 
-    # 3. Fill missing values
+    #  Fill missing values
     for col in numerical_cols:
         df[col] = df[col].fillna(df[col].median())  # median, dataset size intact.
 
