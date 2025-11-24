@@ -27,8 +27,16 @@ def data_preprocess(df):
 
     # separating features and the target
     X = df.drop(columns=['num']) #cols except target
-    y = df['num']
-
+    
+    """
+       y = df['num']
+       
+       changing target to binary classification becase the dataset is both imbalanced and small size
+    """
+ 
+    y=df['num'].apply(lambda x: 1 if x > 0 else 0) #only predicting disease presence
+    
+    
     # 6. Split into train/test sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
