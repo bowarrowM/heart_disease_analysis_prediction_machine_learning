@@ -98,6 +98,15 @@ DATA_PATH="path/to/heart_disease_data.csv"
 
 Alternatively, you can add the paths/credentials directly into your Python scripts if preferred.
 
+After completing the setup, open your terminal and launch the app to access the user interface:
+
+""" 
+bash
+streamlit run app.py
+"""
+
+If any warning messages appear or Streamlit asks for an email, simply press Enter to skip.
+
 ## Notes
 
 All scripts contain comments explaining code logic and reasoning.
