@@ -6,6 +6,10 @@ This is a Python-based data analysis and machine learning project using the UCI 
 The project covers data preprocessing, exploratory data analysis (EDA), visualization, SQL database integration (PostgreSQL), and predictive modeling.
 Comments and reasoning are included throughout the code for clarity.
 
+<img src="images/appscreenshot.png" width="600">
+![Screenshot](images/screenshot.png)
+
+
 ## Project Overview
 
 The purpose of this project is to analyze heart disease data, explore correlations and distributions, and build a machine learning model to predict the presence of heart disease.
