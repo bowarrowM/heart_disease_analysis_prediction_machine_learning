@@ -7,7 +7,6 @@ The project covers data preprocessing, exploratory data analysis (EDA), visualiz
 Comments and reasoning are included throughout the code for clarity.
 
 <img src="images/appscreenshot.png" width="600">
-![Screenshot](images/screenshot.png)
 
 
 ## Project Overview
