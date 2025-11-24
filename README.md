@@ -6,6 +6,7 @@ This is a Python-based data analysis and machine learning project using the UCI 
 The project covers data preprocessing, exploratory data analysis (EDA), visualization, SQL database integration (PostgreSQL), and predictive modeling.
 Comments and reasoning are included throughout the code for clarity.
 
+- Fig. screenshot for user interface 
 <img src="images/appscreenshot.png" width="600">
 
 
