@@ -16,8 +16,8 @@ import streamlit as st
 
 
 # KAGGLE dataset | UCI Heart Disease
-# load_dotenv()
-# data_path = os.getenv("DATA_PATH")
-df = pd.read_csv(r"datasets\heart_disease_uci.csv")
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CSV_PATH = os.path.join(BASE_DIR, "datasets", "heart_disease_uci.csv")
+df = pd.read_csv(CSV_PATH)
 
