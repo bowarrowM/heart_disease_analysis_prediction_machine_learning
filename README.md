@@ -6,6 +6,10 @@ This is a Python-based data analysis and machine learning project using the UCI 
 The project covers data preprocessing, exploratory data analysis (EDA), visualization, SQL database integration (PostgreSQL), and predictive modeling.
 Comments and reasoning are included throughout the code for clarity.
 
+Try the app directly:
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://heartdiseaseanalysispredictionmachinelearning-ctwydqk4zj5ahx5y.streamlit.app/)
+
+
 - Fig. screenshot for user interface 
 <img src="images/appscreenshot.png" width="600">
 
