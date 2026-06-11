@@ -1,125 +1,116 @@
-# Heart Disease Analysis & Prediction Project with Random Forest
+# Heart Disease Risk Prediction
 
--Note: This PROJECT and README are all to be updated. Feedback and suggestions are welcomed and appreciated! Thank you.
+A machine learning web app that predicts the presence of heart disease from patient vitals. Built with Python, scikit-learn (Random Forest), and Streamlit. Uses the UCI Heart Disease dataset (Cleveland, Hungarian, Switzerland, VA Long Beach).
 
-This is a Python-based data analysis and machine learning project using the UCI Heart Disease Dataset (from Kaggle).
-The project covers data preprocessing, exploratory data analysis (EDA), visualization, SQL database integration (PostgreSQL), and predictive modeling.
-Comments and reasoning are included throughout the code for clarity.
-
-Try the app directly:
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://heartdiseaseanalysispredictionmachinelearning-ctwydqk4zj5ahx5y.streamlit.app/)
 
+<img src="images/appscreenshot.png" width="700">
 
-- Fig. screenshot for user interface 
-<img src="images/appscreenshot.png" width="600">
+---
 
+## Model Performance
 
-## Project Overview
+Binary classification: 0 = no disease, 1 = disease present (severity levels 1-4 collapsed).
 
-The purpose of this project is to analyze heart disease data, explore correlations and distributions, and build a machine learning model to predict the presence of heart disease.
-Key aspects of the project include:
+| Metric | Score |
+|--------|-------|
+| Accuracy | 0.86 |
+| F1 Score (weighted) | 0.858 |
+| Train / Test split | 736 / 184 (80/20, stratified) |
 
-Exploratory Data Analysis (EDA): summary statistics, missing values, duplicates
+**Classification report**
 
-Data Visualization: categorical and numerical feature distributions
+| Class | Precision | Recall | F1 |
+|-------|-----------|--------|----|
+| 0 - No disease | 0.86 | 0.82 | 0.84 |
+| 1 - Disease | 0.86 | 0.89 | 0.88 |
 
-Data Cleaning & Preprocessing: handling nulls, encoding categorical variables
+**Top 10 features by importance:** age, thalch, oldpeak, chol, trestbps, exang_True, restecg_normal, thal_normal, cp_atypical angina
 
-Database Integration: optional PostgreSQL connection for storing/querying the dataset. Currently commented out in my version but modify as wanted.
+**Missing value handling:** `ca` (~66% missing) was dropped entirely. Remaining missing values were imputed with column median (numerical) or mode (categorical).
 
-Model Training & Evaluation: predictive modeling with performance metrics and confusion matrix
+---
 
-## Model Results and Project Conclusion
+## Setup
 
-### Note:
-   ""
-   Missing values in multiple feature categories: 
-   - ca, 611, (~66%) | slope, 309, (~33%) | thal, 486, (~53%) | trestbps, chol, thalch, oldpeak, exang : under 10%
-   - Solutions: ca was dropped, mode and median techniques were used to handle other vals with high missing values.
-  
-   ""
+### Docker (recommended)
 
-### model_results = 
-- Train shape: (736, 20)
-- Test shape: (184, 20)
-- Accuracy: 0.86 binary class
-- F1 Score: 0.858 binary
+```bash
+git clone <repo-url>
+cd heart_disease_analysis_prediction_machine_learning
+docker compose up --build
+```
 
-### Classification Report: For all  levels of heart disease stated in the dataset (0 : no disease, 1: disease)
-   -0: precision 0.86, recall 0.82, f1 0.84
-   -1: precision 0.86, recall 0.89, f1 0.88
+Open http://localhost:8501. The pre-built model files are committed so the app starts immediately without retraining.
 
-  
-### Top 10 Features by Importance:
-  age, thalch, oldpeak, chol, trestbpsy, exang_True, restecg_normal, thal_normal, cp_atypical angina
+### Local
+
+```bash
+git clone <repo-url>
+cd heart_disease_analysis_prediction_machine_learning
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+### PostgreSQL (optional)
+
+The database integration is optional. The app runs fully without it using only the CSV and `.pkl` files.
+
+Copy `.env.example` to `.env`:
+
+```bash
+cp .env.example .env
+```
+
+With Docker the database is already included in `docker-compose.yml`. For local development, start the container and connect via localhost:
+
+```
+DB_URL=postgresql://heart:heart@localhost:5432/heart_disease
+```
+
+Then use `sqlDB_connection.py` to upload the dataset or run queries:
+
+```python
+from sqlDB_connection import upload_dataframe, query
+import pandas as pd
+
+df = pd.read_csv("datasets/heart_disease_uci.csv")
+upload_dataframe(df)
+```
+
+---
+
+## Rebuilding the Model
+
+The `.pkl` files are committed and ready to use. To retrain from scratch:
+
+```bash
+python data_analysis.py        # EDA summary to stdout
+python plots_visualization.py  # saves plots to images/eda/
+python model.py                # trains and saves heart_disease_model.pkl + model_columns.pkl
+```
+
+---
 
 ## Project Structure
-├── .env                  # Environment variables / database credentials (gitignored)
 
-├── all_imports.py        # Library imports and dataset loading
-
-├── app.py                # Streamlit frontend interface for users
-
-├── data_analysis.py      # EDA: info, shape, nulls, summary stats
-
-├── plots_visualization.py# Visualizations for EDA
-
-├── sqlDB_connection.py   # PostgreSQL database connection (optional)
-
-├── model.py              # Preprocessing, training, evaluation, confusion matrix
-
-├── heart_disease_model.pkl
-
-├── model_columns.pkl
-
-└── requirements.txt      # Required Python packages
-
-
-## Setup Instructions
-
-### Clone the repository
-from terminal/powershell (bash):
-
-git clone repo-url
-
-cd heart-disease-project
-
-
-### Install dependencies
-
-* pip install -r requirements.txt 
-
-* or install with the package manager of your choice.
-* (All the libraries used: pandas numpy matplotlib seaborn scikit-learn psycopg2-binary python-dotenv sqlalchemy)
-
-
-Open the project in your preferred IDE (VS Code, PyCharm, etc.)
-
-Create your .env file (not included in the repo for security) and add your credentials (listed below):
-
-### PostgreSQL database URL
-DB_URL="postgresql://username:password@localhost:5432/db_name"
-
-### Local dataset path (Kaggle CSV)
-DATA_PATH="path/to/heart_disease_data.csv"
-
-
-Alternatively, you can add the paths/credentials directly into your Python scripts if preferred.
-
-After completing the setup, open your terminal and launch the app to access the user interface:
-
-""" 
-
-streamlit run app.py
-
-"""
-
-If any warning messages appear or Streamlit asks for an email, simply press Enter to skip.
-
-## Notes
-
-All scripts contain comments explaining code logic and reasoning.
-
-SQL integration is optional; you can run the project fully with CSV data.
-
-Visualizations and model evaluation results are generated automatically via the scripts.
+```
+.
++-- app.py                    # Streamlit UI
++-- model.py                  # Preprocessing, training, evaluation
++-- data_analysis.py          # EDA script
++-- plots_visualization.py    # EDA visualizations (saves to images/eda/)
++-- all_imports.py            # Shared imports and path constants
++-- sqlDB_connection.py       # Optional PostgreSQL integration
++-- Dockerfile
++-- docker-compose.yml
++-- requirements.txt
++-- .env.example
++-- datasets/
+|   +-- heart_disease_uci.csv
++-- images/
+|   +-- appscreenshot.png
+|   +-- confmatx.png
++-- heart_disease_model.pkl
++-- model_columns.pkl
+```
