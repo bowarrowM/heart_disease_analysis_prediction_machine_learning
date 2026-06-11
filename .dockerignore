@@ -1,0 +1,12 @@
+.git
+.env
+.idea
+.claude
+__pycache__
+*.pyc
+*.pyo
+venv
+.venv
+images/eda
+CLAUDE.md
+README.md

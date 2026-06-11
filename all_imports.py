@@ -1,23 +1,15 @@
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, classification_report
-import psycopg2
-import scipy
-from dotenv import load_dotenv
 import os
+from pathlib import Path
+
 import joblib
-import streamlit as st
-# dev note: I code & retrieve files from .env or such files, but you can also write the path on any file you want
-# dev note: I also prefer to code different functionalities (plotting, analysis, libraries etc.) in separate files for better organization for larger projects.
-# dev not: But! All can be done in a single file as well. Totally up to you. Have fun, do it your own style ^^.
+import numpy as np
+import pandas as pd
+import seaborn as sns
+from dotenv import load_dotenv
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, f1_score
+from sklearn.model_selection import train_test_split
 
+load_dotenv()
 
-# KAGGLE dataset | UCI Heart Disease
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CSV_PATH = os.path.join(BASE_DIR, "datasets", "heart_disease_uci.csv")
-df = pd.read_csv(CSV_PATH)
-
+BASE_DIR = Path(__file__).parent
+CSV_PATH = BASE_DIR / "datasets" / "heart_disease_uci.csv"

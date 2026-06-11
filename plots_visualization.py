@@ -1,39 +1,47 @@
-from all_imports import *
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
 
-#EDA PLOTS
-#Plot which features peak depending on the dataset source or gender
-cat_cols = ["sex", "cp", "fbs", "restecg", "exang", "slope", "ca", "thal"] # Categorical columns. Modify depending on the needs.
+from all_imports import BASE_DIR, CSV_PATH
 
-# Plots for dataset source
-for col in cat_cols:
-    plt.figure(figsize=(8,4))
-    sns.countplot(data=df, x=col, hue="dataset", palette="Set2")
-    plt.title(f"{col} distribution by dataset")
-    plt.show()
-# Summary stats
-exclude = ["id", "num"]
-cat_cols_dataset = [col for col in df.columns if (df[col].dtype == "object" or df[col].nunique() < 10) and col not in exclude]
-cat_summary_dataset = {}
-for col in cat_cols_dataset:
-    cat_summary_dataset[col] = df.groupby("dataset")[col].agg(lambda x: x.value_counts().idxmax())
-cat_summary_dataset = pd.DataFrame(cat_summary_dataset)
+IMAGES_DIR = BASE_DIR / "images" / "eda"
 
-# Plots based on sex/gender (dataset ignored)
-for col in cat_cols:
-    plt.figure(figsize=(8,4))
-    sns.countplot(data=df, x=col, hue="sex", palette="Set1")
-    plt.title(f"{col} distribution by sex")
-    plt.show()
-# Summary stats
-exclude = ["id", "dataset", "num", "sex"]
-cat_cols_sex = [col for col in df.columns if (df[col].dtype == "object" or df[col].nunique() < 10) and col not in exclude]
-cat_summary = {}
-for col in cat_cols_sex:
-    cat_summary[col] = df.groupby("sex")[col].agg(lambda x: x.value_counts().idxmax())
-cat_summary = pd.DataFrame(cat_summary)
 
-#distribution of the x (x = heart disease yes/no)
-sns.countplot(x='num', data=df)
-plt.title('Heart Disease Distribution')
-plt.show()
+def save_categorical_plots(df: pd.DataFrame) -> None:
+    IMAGES_DIR.mkdir(parents=True, exist_ok=True)
 
+    cat_cols = ["sex", "cp", "fbs", "restecg", "exang", "slope", "thal"]
+
+    for col in [c for c in cat_cols if c in df.columns]:
+        fig, axes = plt.subplots(1, 2, figsize=(14, 4))
+
+        sns.countplot(data=df, x=col, hue="dataset", palette="Set2", ax=axes[0])
+        axes[0].set_title(f"{col} by dataset source")
+        axes[0].tick_params(axis="x", rotation=30)
+
+        sns.countplot(data=df, x=col, hue="sex", palette="Set1", ax=axes[1])
+        axes[1].set_title(f"{col} by sex")
+        axes[1].tick_params(axis="x", rotation=30)
+
+        fig.tight_layout()
+        out = IMAGES_DIR / f"{col}_dist.png"
+        fig.savefig(out, dpi=120, bbox_inches="tight")
+        plt.close(fig)
+        print(f"Saved {out.name}")
+
+    fig, ax = plt.subplots(figsize=(6, 4))
+    sns.countplot(x="num", data=df, ax=ax)
+    ax.set_title("Heart Disease Distribution (target)")
+    ax.set_xlabel("0 = No Disease  |  1–4 = Disease Severity")
+    out = IMAGES_DIR / "target_distribution.png"
+    fig.savefig(out, dpi=120, bbox_inches="tight")
+    plt.close(fig)
+    print(f"Saved {out.name}")
+
+
+if __name__ == "__main__":
+    df = pd.read_csv(CSV_PATH)
+    save_categorical_plots(df)
+    print(f"\nAll plots saved to {IMAGES_DIR}")
